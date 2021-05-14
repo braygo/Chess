@@ -1,3 +1,4 @@
 # Ignoring Project Files
 /.vs/*
 /ChessProject/*
+/PieceTextures/*
