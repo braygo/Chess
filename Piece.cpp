@@ -13,6 +13,19 @@ Piece::Piece(int xCoord, int yCoord, char pieceType, bool player) {
 	this->setType(pieceType);
 	this->setPlayer(player);
 
+	if (player) { //is white
+		switch (pieceType) {
+		case 'p':
+			break;
+		default:
+
+			break;
+		}
+	}
+	else { //is black
+
+	}
+
 }
 
 void Piece::setX(int val) {

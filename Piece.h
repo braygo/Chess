@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
-class Piece {
+class Piece : public Sprite{
 public:
 	Piece();
 	Piece(int xCoord, int yCoord, char pieceType, bool player);
