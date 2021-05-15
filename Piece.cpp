@@ -53,8 +53,8 @@ void Piece::addTexture(char pieceType, bool player) {
 			break;
 		}
 	}
-	std::cout << "Loaded texture" << std::endl;
-	std::cout << texture.loadFromFile(path) <<  std::endl; 
+	
+	texture.loadFromFile(path);
 	this->setTexture(texture);
 
 	
