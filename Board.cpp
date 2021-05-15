@@ -13,6 +13,10 @@ void Board::setBoardPtr(Piece* ptr) {
 	board[ptr->getX()][ptr->getY()] = ptr;
 }
 
+void Board::setBoardPtr(int xCoord, int yCoord, Piece* newPiecePtr) {
+	board[xCoord][yCoord] = newPiecePtr;
+}
+
 Piece* Board::getBoardPtr(int xCoord, int yCoord) {
 	return board[xCoord][yCoord];
 }
@@ -43,9 +47,6 @@ void Board::setBoard(RenderWindow& window) {
 	setBoardPtr(new Piece(5, 7, 'b', true));
 	setBoardPtr(new Piece(3, 7, 'q', true));
 	setBoardPtr(new Piece(4, 7, 'k', true));
-
-
-
 }
 
 void Board::renderBoard(sf::RenderWindow& window) {
@@ -77,4 +78,12 @@ void Board::drawCurrentBoard(RenderWindow& window) {
 			}
 		}
 	}
+}
+
+void Board::movePiece(int startX, int startY, int endX, int endY) {
+	board[endX][endY] = board[startX][startY];
+	board[startX][startY] = nullptr;
+	board[endX][endY]->setPosition((float)((endX * 127) + 10), (float)(endY * 127));
+
+
 }

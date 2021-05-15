@@ -5,35 +5,38 @@ void ChessGame::runGame(void) {
 
 	Board gameboard;
 	gameboard.setBoard(window);
+
+	int currentXCoord = 0;
+	int currentYCoord = 0;
 	while (window.isOpen()) {
-		
+
 		gameboard.renderBoard(window);
 		gameboard.drawCurrentBoard(window);
-		
+
 		window.display();
-		
-
-
-
-
-
-
-
-
 
 		Event evnt;
 		while (window.pollEvent(evnt)) {
 			switch (evnt.type) {
-				case Event::Closed:
-					window.close();
-					break;
-				case sf::Event::TextEntered:
-					if (evnt.text.unicode < 128) {
-						printf("%c", evnt.text.unicode);
-					}
+			case Event::Closed:
+				window.close();
+				break;
+			case Event::TextEntered:
+				if (evnt.text.unicode < 128) {
+					printf("%c", evnt.text.unicode);
+				}
+				gameboard.movePiece(0, 0, 2, 4);
+				break;
+			case Event::MouseButtonPressed:
+				if ((evnt.mouseButton.x >= 0 && evnt.mouseButton.x <= 1024) && (evnt.mouseButton.y >= 0 && evnt.mouseButton.y <= 1024)) {
+					currentXCoord = evnt.mouseButton.x / 128;
+					currentYCoord = evnt.mouseButton.y / 128;
+					Piece* currentPiece = gameboard.getBoardPtr(currentXCoord, currentYCoord);
+
+				}
+
 					break;
 				}
-			}
-			
+			}		
 	}
 }

@@ -78,6 +78,23 @@ Piece::Piece(int xCoord, int yCoord, char pieceType, bool player) {
 
 }
 
+Piece::Piece(const Piece& p) {
+	this->xCoord = p.xCoord;
+	this->yCoord = p.yCoord;
+	this->pieceType = p.pieceType;
+	this->player = p.player;
+	this->texture = p.texture;
+}
+
+Piece& Piece::operator = (const Piece& p) {
+	this->xCoord = p.xCoord;
+	this->yCoord = p.yCoord;
+	this->pieceType = p.pieceType;
+	this->player = p.player;
+	this->texture = p.texture;
+	return *this;
+}
+
 void Piece::setX(int val) {
 	xCoord = val;
 }

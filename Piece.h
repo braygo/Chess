@@ -6,6 +6,9 @@ public:
 	Piece();
 	Piece(int xCoord, int yCoord, char pieceType, bool player);
 
+	Piece(const Piece& p);
+	Piece& operator = (const Piece& p);
+
 	void addTexture(char pieceType, bool player);
 
 	
