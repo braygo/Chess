@@ -4,11 +4,12 @@ void ChessGame::runGame(void) {
 	RenderWindow window(VideoMode(1024, 1024), "C++ Chess", Style::Close | Style::Titlebar);
 
 	Board gameboard;
-
+	gameboard.setBoard(window);
 	while (window.isOpen()) {
+		
 		gameboard.renderBoard(window);
-
-
+		gameboard.drawCurrentBoard(window);
+		
 		window.display();
 		
 

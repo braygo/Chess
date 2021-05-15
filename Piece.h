@@ -1,9 +1,12 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 using namespace sf;
 class Piece : public Sprite{
 public:
 	Piece();
 	Piece(int xCoord, int yCoord, char pieceType, bool player);
+
+	void addTexture(char pieceType, bool player);
 
 	
 	void setX(int val);
@@ -16,9 +19,15 @@ public:
 	char getType(void);
 	bool getPlayer(void);
 
+	void draw(sf::RenderWindow& window);
+
+
+
 private:
 	int xCoord;
 	int yCoord;
 	char pieceType; //p = pawn, h = knight, b = bishop, r = rook, q = queen, k = king
 	bool player; //white == true, black == false
+	Texture texture;
+
 };
