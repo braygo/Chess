@@ -39,12 +39,11 @@ void ChessGame::runGame(void) {
 					}
 					else if(getPieceSelected() != nullptr){ //Movement phase
 						Piece* selectedPiece = getPieceSelected();
-						cout << selectedPiece->getX() << endl;
-						cout << selectedPiece->getY() << endl;
-						cout << currentXCoord << endl;
-						cout << currentYCoord << endl;
-						gameboard.movePiece(selectedPiece->getX(), selectedPiece->getY(), currentXCoord, currentYCoord);
-						setPieceSelected(nullptr);
+						if (selectedPiece->moveCheck(currentXCoord, currentYCoord)) {
+							gameboard.movePiece(selectedPiece->getX(), selectedPiece->getY(), currentXCoord, currentYCoord);
+							setPieceSelected(nullptr);
+						}
+						
 					}
 					
 				}

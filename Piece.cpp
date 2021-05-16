@@ -124,4 +124,16 @@ void Piece::draw(sf::RenderWindow& window) {
 	window.draw(*(dynamic_cast<Sprite*>(this)));
 }
 
-bool moveCheck(int newX, int newY, Piece* piece);
+bool Piece::moveCheck(int newX, int newY) {
+	bool isValid = true;
+	switch (getType()) {
+	case 'p':
+		if (abs(getY() - newY) > 1) {
+			isValid = false;
+		}
+		break;
+	default:
+		break;
+	}
+	return isValid;
+}

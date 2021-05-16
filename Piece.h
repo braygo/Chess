@@ -29,7 +29,7 @@ public:
 
 	void draw(sf::RenderWindow& window);
 
-	bool moveCheck(int newX, int newY, Piece* piece);
+	bool moveCheck(int newX, int newY);
 
 
 
