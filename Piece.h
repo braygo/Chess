@@ -1,6 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 using namespace sf;
+using std::cout;
+using std::endl;
+
 class Piece : public Sprite{
 public:
 	Piece();

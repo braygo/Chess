@@ -8,7 +8,6 @@ Board::Board() {
 	}
 }
 
-
 void Board::setBoardPtr(Piece* ptr) {
 	board[ptr->getX()][ptr->getY()] = ptr;
 }
@@ -17,9 +16,13 @@ void Board::setBoardPtr(int xCoord, int yCoord, Piece* newPiecePtr) {
 	board[xCoord][yCoord] = newPiecePtr;
 }
 
+
+
 Piece* Board::getBoardPtr(int xCoord, int yCoord) {
 	return board[xCoord][yCoord];
 }
+
+
 
 void Board::setBoard(RenderWindow& window) {
 	//Black Pieces

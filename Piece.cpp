@@ -56,9 +56,6 @@ void Piece::addTexture(char pieceType, bool player) {
 	
 	texture.loadFromFile(path);
 	this->setTexture(texture);
-
-	
-	
 }
 
 void Piece::draw(sf::RenderWindow& window) {
