@@ -84,9 +84,12 @@ void Board::drawCurrentBoard(RenderWindow& window) {
 }
 
 void Board::movePiece(int startX, int startY, int endX, int endY) {
-	board[endX][endY] = board[startX][startY];
-	board[startX][startY] = nullptr;
-	board[endX][endY]->setPosition((float)((endX * 127) + 10), (float)(endY * 127));
-
-
+	Piece* temp = board[startX][startY];
+	temp->setPosition((float)((endX * 127) + 10), (float)(endY * 127));
+	temp->setX(endX);
+	temp->setY(endY);
+	setBoardPtr(endX, endY, temp);
+	setBoardPtr(startX, startY, nullptr);
+	
+	
 }
