@@ -12,7 +12,7 @@ public:
 	Piece(const Piece& p);
 	Piece& operator = (const Piece& p);
 
-	void addTexture(char pieceType, bool player);
+	
 
 	
 	void setX(int val);
@@ -25,7 +25,11 @@ public:
 	char getType(void);
 	bool getPlayer(void);
 
+	void addTexture(char pieceType, bool player);
+
 	void draw(sf::RenderWindow& window);
+
+	bool moveCheck(int newX, int newY, Piece* piece);
 
 
 
