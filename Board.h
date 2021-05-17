@@ -15,6 +15,7 @@ public:
 	void setBoard(RenderWindow& window); //sets intial piece positions
 	void drawCurrentBoard(RenderWindow& window);
 
+	bool checkMove(int startX, int startY, int endX, int endY);
 	void movePiece(int startX, int startY, int endX, int endY);
 private:
 	Piece* board[8][8];

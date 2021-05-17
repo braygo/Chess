@@ -1,4 +1,5 @@
 #include "Piece.h"
+#include "Board.h"
 
 //Default Constructor should remain unused
 Piece::Piece() {
@@ -12,6 +13,7 @@ Piece::Piece(int xCoord, int yCoord, char pieceType, bool player) {
 	this->setY(yCoord);
 	this->setType(pieceType);
 	this->setPlayer(player);
+	this->setHasMoved(false);
 
 	this->addTexture(pieceType, player);
 	
@@ -53,6 +55,10 @@ void Piece::setPlayer(bool val) {
 	player = val;
 }
 
+void Piece::setHasMoved(bool tf) {
+	hasMoved = tf;
+}
+
 int Piece::getX(void) {
 	return xCoord;
 }
@@ -67,6 +73,10 @@ char Piece::getType(void) {
 
 bool Piece::getPlayer(void) {
 	return player;
+}
+
+bool Piece::getHasMoved(void) {
+	return hasMoved;
 }
 
 void Piece::addTexture(char pieceType, bool player) {
@@ -122,18 +132,4 @@ void Piece::addTexture(char pieceType, bool player) {
 
 void Piece::draw(sf::RenderWindow& window) {
 	window.draw(*(dynamic_cast<Sprite*>(this)));
-}
-
-bool Piece::moveCheck(int newX, int newY) {
-	bool isValid = true;
-	switch (getType()) {
-	case 'p':
-		if (abs(getY() - newY) > 1) {
-			isValid = false;
-		}
-		break;
-	default:
-		break;
-	}
-	return isValid;
 }

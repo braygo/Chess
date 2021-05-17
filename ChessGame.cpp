@@ -33,13 +33,15 @@ void ChessGame::runGame(void) {
 					currentYCoord = evnt.mouseButton.y / 128;
 					Piece* currentPiece = gameboard.getBoardPtr(currentXCoord, currentYCoord);
 
-					if (getPieceSelected() == nullptr && currentPiece != nullptr) { //Selecting phase
+					//Selecting phase
+					if (getPieceSelected() == nullptr && currentPiece != nullptr) { 
 						setPieceSelected(currentPiece);
 						std::cout << "Piece Selected" << std::endl;
 					}
-					else if(getPieceSelected() != nullptr){ //Movement phase
+					//Movement phase
+					else if(getPieceSelected() != nullptr){ 
 						Piece* selectedPiece = getPieceSelected();
-						if (selectedPiece->moveCheck(currentXCoord, currentYCoord)) {
+						if (gameboard.checkMove(selectedPiece->getX(), selectedPiece->getY(), currentXCoord, currentYCoord)) {
 							gameboard.movePiece(selectedPiece->getX(), selectedPiece->getY(), currentXCoord, currentYCoord);
 							setPieceSelected(nullptr);
 						}

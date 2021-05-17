@@ -83,11 +83,45 @@ void Board::drawCurrentBoard(RenderWindow& window) {
 	}
 }
 
+bool Board::checkMove(int startX, int startY, int endX, int endY) {
+	Piece* piece = this->getBoardPtr(startX, startY);
+	bool isValid = false;
+	switch (piece->getType()) {
+	case 'p':
+		if (piece->getPlayer()) { //white
+			//normal movement
+			if (getBoardPtr(endX, endY) == nullptr) {
+				if (endY + 1 == piece->getY() && endX == piece->getX()) {
+					isValid = true;
+				}
+				//starting jump movement
+				else if ((endY + 2 == piece->getY() && endX == piece->getX()) && piece->getHasMoved() == false) {
+					isValid = true;
+				}
+			} 
+			
+			//attacking
+			else if ((endY + 1 == piece->getY() && abs(endX - piece->getX()) == 1) && (getBoardPtr(endX, endY) != nullptr && getBoardPtr(endX,endY)->getPlayer() != getBoardPtr(startX, startY)->getPlayer())) {
+				isValid = true;
+			}
+		}
+		else { //black
+
+		}
+		break;
+	default:
+		break;
+	}
+	return isValid;
+}
+
+
 void Board::movePiece(int startX, int startY, int endX, int endY) {
 	Piece* temp = board[startX][startY];
 	temp->setPosition((float)((endX * 127) + 10), (float)(endY * 127));
 	temp->setX(endX);
 	temp->setY(endY);
+	temp->setHasMoved(true);
 	setBoardPtr(endX, endY, temp);
 	setBoardPtr(startX, startY, nullptr);
 	
