@@ -141,7 +141,7 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 		break;
 	case 'b':
 		if (abs(endY - piece->getY()) == abs(endX - piece->getX())) {
-			if (getBoardPtr(endX, endY) == nullptr) {
+			
 				tempX = piece->getX();
 				tempY = piece->getY();
 				diffX = endX - piece->getX();
@@ -195,10 +195,24 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 						tempY++;
 					}
 				}
+
+				if (getBoardPtr(endX, endY) == nullptr) {
+					isValid = true;
+				} else if (getBoardPtr(endX, endY)->getPlayer() != getBoardPtr(startX, startY)->getPlayer()) {
+						isValid = true;
+					}
+				
+		}
+		break;
+	case 'r':
+		if (endX == piece->getX() || endY == piece->getY()) {
+			if (getBoardPtr(endX, endY) == nullptr) {
 				isValid = true;
 			}
+			
 		}
 	}
+	
 	if (flag == true) {
 		isValid = false;
 	}
