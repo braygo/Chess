@@ -258,6 +258,110 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 			}
 			
 		}
+		break;
+	case 'q' :
+		if (abs(endY - piece->getY()) == abs(endX - piece->getX()) || (endX == piece->getX() || endY == piece->getY())) {
+
+			tempX = piece->getX();
+			tempY = piece->getY();
+			diffX = endX - piece->getX();
+			diffY = endY - piece->getY();
+
+			if (diffX > 0 && diffY < 0) { //up right
+				tempX++;
+				tempY--;
+				while (tempX != endX && tempY != endY) {
+					if (getBoardPtr(tempX, tempY) != nullptr) {
+						flag = true;
+					}
+					tempX++;
+					tempY--;
+				}
+			}
+			if (diffX > 0 && diffY > 0) { //down right
+				tempX++;
+				tempY++;
+				while (tempX != endX && tempY != endY) {
+					if (getBoardPtr(tempX, tempY) != nullptr) {
+						flag = true;
+					}
+					tempX++;
+					tempY++;
+				}
+			}
+			if (diffX < 0 && diffY < 0) { //up left
+				tempX--;
+				tempY--;
+				while (tempX != endX && tempY != endY) {
+					if (getBoardPtr(tempX, tempY) != nullptr) {
+						flag = true;
+					}
+					tempX--;
+					tempY--;
+				}
+			}
+			if (diffX < 0 && diffY > 0) { //down left
+				tempX--;
+				tempY++;
+				while (tempX != endX && tempY != endY) {
+					if (getBoardPtr(tempX, tempY) != nullptr) {
+						flag = true;
+					}
+					tempX--;
+					tempY++;
+				}
+			}
+
+			if (diffX == 0 && diffY < 0) { //up
+				cout << "Rook moving up" << endl;
+				tempY--;
+				while (tempY != endY) {
+					if (getBoardPtr(tempX, tempY) != nullptr) {
+						flag = true;
+					}
+					tempY--;
+				}
+			}
+			if (diffX == 0 && diffY > 0) { //down
+				cout << "Rook moving down" << endl;
+				tempY++;
+				while (tempY != endY) {
+					if (getBoardPtr(tempX, tempY) != nullptr) {
+						flag = true;
+					}
+					tempY++;
+				}
+			}
+			if (diffX < 0 && diffY == 0) { //left
+				cout << "Rook moving left" << endl;
+				tempX--;
+				while (tempX != endX) {
+					if (getBoardPtr(tempX, tempY) != nullptr) {
+						flag = true;
+					}
+					tempX--;
+				}
+			}
+			if (diffX > 0 && diffY == 0) { //right
+				cout << "Rook moving right" << endl;
+				tempX++;
+				while (tempX != endX) {
+					if (getBoardPtr(tempX, tempY) != nullptr) {
+						flag = true;
+					}
+					tempX++;
+				}
+			}
+
+			if (getBoardPtr(endX, endY) == nullptr) {
+				isValid = true;
+			}
+			else if (getBoardPtr(endX, endY)->getPlayer() != getBoardPtr(startX, startY)->getPlayer()) {
+				isValid = true;
+			}
+
+		}
+		break;
 	}
 	
 	if (flag == true) {
