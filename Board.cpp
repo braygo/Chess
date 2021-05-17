@@ -105,7 +105,19 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 			}
 		}
 		else { //black
-
+			if (getBoardPtr(endX, endY) == nullptr) {
+				if (endY - 1 == piece->getY() && endX == piece->getX()) {
+					isValid = true;
+				}
+				//starting jump movement
+				else if ((endY - 2 == piece->getY() && endX == piece->getX()) && piece->getHasMoved() == false) {
+					isValid = true;
+				}
+			}
+			//attacking
+			else if ((endY - 1 == piece->getY() && abs(endX - piece->getX()) == 1) && (getBoardPtr(endX, endY) != nullptr && getBoardPtr(endX, endY)->getPlayer() != getBoardPtr(startX, startY)->getPlayer())) {
+				isValid = true;
+			}
 		}
 		break;
 	default:

@@ -57,7 +57,6 @@ void ChessGame::runGame(void) {
 	}
 }
 
-
 void ChessGame::setPieceSelected(Piece* newPiece) {
 	pieceSelected = newPiece;
 }
