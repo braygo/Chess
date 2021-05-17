@@ -120,7 +120,14 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 			}
 		}
 		break;
-	default:
+	case 'h':
+		
+		if (((abs(endY - piece->getY()) == 2)&& abs(endX - piece->getX()) == 1) ||
+			(abs(endX - piece->getX()) == 2 && abs(endY - piece->getY()) == 1)) {
+			if (getBoardPtr(endX, endY) == nullptr) {
+				isValid = true;
+			}
+		}
 		break;
 	}
 	return isValid;

@@ -39,5 +39,4 @@ private:
 	bool player; //white == true, black == false
 	bool hasMoved;
 	Texture texture;
-
 };
