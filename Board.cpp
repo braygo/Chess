@@ -31,25 +31,25 @@ void Board::setBoard(RenderWindow& window) {
 	}
 	setBoardPtr(new Piece(0, 0, 'r', false));
 	setBoardPtr(new Piece(7, 0, 'r', false));
-	setBoardPtr(new Piece(1, 0, 'h', false));
-	setBoardPtr(new Piece(6, 0, 'h', false));
-	setBoardPtr(new Piece(2, 0, 'b', false));
-	setBoardPtr(new Piece(5, 0, 'b', false));
-	setBoardPtr(new Piece(3, 0, 'q', false));
-	setBoardPtr(new Piece(4, 0, 'k', false));
+setBoardPtr(new Piece(1, 0, 'h', false));
+setBoardPtr(new Piece(6, 0, 'h', false));
+setBoardPtr(new Piece(2, 0, 'b', false));
+setBoardPtr(new Piece(5, 0, 'b', false));
+setBoardPtr(new Piece(3, 0, 'q', false));
+setBoardPtr(new Piece(4, 0, 'k', false));
 
-	//White Pieces
-	for (int i = 0; i < 8; i++) {
-		setBoardPtr(new Piece(i, 6, 'p', true));
-	}
-	setBoardPtr(new Piece(0, 7, 'r', true));
-	setBoardPtr(new Piece(7, 7, 'r', true));
-	setBoardPtr(new Piece(1, 7, 'h', true));
-	setBoardPtr(new Piece(6, 7, 'h', true));
-	setBoardPtr(new Piece(2, 7, 'b', true));
-	setBoardPtr(new Piece(5, 7, 'b', true));
-	setBoardPtr(new Piece(3, 7, 'q', true));
-	setBoardPtr(new Piece(4, 7, 'k', true));
+//White Pieces
+for (int i = 0; i < 8; i++) {
+	setBoardPtr(new Piece(i, 6, 'p', true));
+}
+setBoardPtr(new Piece(0, 7, 'r', true));
+setBoardPtr(new Piece(7, 7, 'r', true));
+setBoardPtr(new Piece(1, 7, 'h', true));
+setBoardPtr(new Piece(6, 7, 'h', true));
+setBoardPtr(new Piece(2, 7, 'b', true));
+setBoardPtr(new Piece(5, 7, 'b', true));
+setBoardPtr(new Piece(3, 7, 'q', true));
+setBoardPtr(new Piece(4, 7, 'k', true));
 }
 
 void Board::renderBoard(sf::RenderWindow& window) {
@@ -77,7 +77,7 @@ void Board::drawCurrentBoard(RenderWindow& window) {
 		for (int j = 0; j < 8; j++) {
 			if (board[i][j] != nullptr) {
 				board[i][j]->draw(window);
-				
+
 			}
 		}
 	}
@@ -86,6 +86,13 @@ void Board::drawCurrentBoard(RenderWindow& window) {
 bool Board::checkMove(int startX, int startY, int endX, int endY) {
 	Piece* piece = this->getBoardPtr(startX, startY);
 	bool isValid = false;
+
+	//Used for collision logic
+	int tempX = 0;
+	int tempY = 0;
+	bool flag = false;
+	int diffX = 0;
+	int diffY = 0;
 	switch (piece->getType()) {
 	case 'p':
 		if (piece->getPlayer()) { //white
@@ -98,9 +105,9 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 				else if ((endY + 2 == piece->getY() && endX == piece->getX()) && piece->getHasMoved() == false) {
 					isValid = true;
 				}
-			} 
+			}
 			//attacking
-			else if ((endY + 1 == piece->getY() && abs(endX - piece->getX()) == 1) && (getBoardPtr(endX, endY) != nullptr && getBoardPtr(endX,endY)->getPlayer() != getBoardPtr(startX, startY)->getPlayer())) {
+			else if ((endY + 1 == piece->getY() && abs(endX - piece->getX()) == 1) && (getBoardPtr(endX, endY) != nullptr && getBoardPtr(endX, endY)->getPlayer() != getBoardPtr(startX, startY)->getPlayer())) {
 				isValid = true;
 			}
 		}
@@ -121,14 +128,79 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 		}
 		break;
 	case 'h':
-		
-		if (((abs(endY - piece->getY()) == 2)&& abs(endX - piece->getX()) == 1) ||
+
+		if (((abs(endY - piece->getY()) == 2) && abs(endX - piece->getX()) == 1) ||
 			(abs(endX - piece->getX()) == 2 && abs(endY - piece->getY()) == 1)) {
 			if (getBoardPtr(endX, endY) == nullptr) {
 				isValid = true;
 			}
+			else if (getBoardPtr(endX, endY)->getPlayer() != getBoardPtr(startX, startY)->getPlayer()) {
+				isValid = true;
+			}
 		}
 		break;
+	case 'b':
+		if (abs(endY - piece->getY()) == abs(endX - piece->getX())) {
+			if (getBoardPtr(endX, endY) == nullptr) {
+				tempX = piece->getX();
+				tempY = piece->getY();
+				diffX = endX - piece->getX();
+				diffY = endY - piece->getY();
+
+				if (diffX > 0 && diffY < 0) { //up right
+					tempX++;
+					tempY--;
+					while (tempX != endX && tempY != endY) {
+						if (getBoardPtr(tempX, tempY) != nullptr) {
+							flag = true;
+							cout << "Piece collision detected" << endl;
+						}
+						tempX++;
+						tempY--;
+					}
+				}
+				if (diffX > 0 && diffY > 0) { //down right
+					tempX++;
+					tempY++;
+					while (tempX != endX && tempY != endY) {
+						if (getBoardPtr(tempX, tempY) != nullptr) {
+							flag = true;
+							cout << "Piece collision detected" << endl;
+						}
+						tempX++;
+						tempY++;
+					}
+				}
+				if (diffX < 0 && diffY < 0) { //up left
+					tempX--;
+					tempY--;
+					while (tempX != endX && tempY != endY) {
+						if (getBoardPtr(tempX, tempY) != nullptr) {
+							flag = true;
+							cout << "Piece collision detected" << endl;
+						}
+						tempX--;
+						tempY--;
+					}
+				}
+				if (diffX < 0 && diffY > 0) { //down left
+					tempX--;
+					tempY++;
+					while (tempX != endX && tempY != endY) {
+						if (getBoardPtr(tempX, tempY) != nullptr) {
+							flag = true;
+							cout << "Piece collision detected" << endl;
+						}
+						tempX--;
+						tempY++;
+					}
+				}
+				isValid = true;
+			}
+		}
+	}
+	if (flag == true) {
+		isValid = false;
 	}
 	return isValid;
 }
