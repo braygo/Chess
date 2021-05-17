@@ -88,11 +88,12 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 	bool isValid = false;
 
 	//Used for collision logic
-	int tempX = 0;
-	int tempY = 0;
 	bool flag = false;
-	int diffX = 0;
-	int diffY = 0;
+	int tempX = piece->getX();
+	int tempY = piece->getY();
+	int diffX = endX - piece->getX();
+	int diffY = endY - piece->getY();
+
 	switch (piece->getType()) {
 	case 'p':
 		if (piece->getPlayer()) { //white
@@ -141,12 +142,6 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 		break;
 	case 'b':
 		if (abs(endY - piece->getY()) == abs(endX - piece->getX())) {
-			
-				tempX = piece->getX();
-				tempY = piece->getY();
-				diffX = endX - piece->getX();
-				diffY = endY - piece->getY();
-
 				if (diffX > 0 && diffY < 0) { //up right
 					tempX++;
 					tempY--;
@@ -202,10 +197,6 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 		break;
 	case 'r':
 		if (endX == piece->getX() || endY == piece->getY()) {
-			tempX = piece->getX();
-			tempY = piece->getY();
-			diffX = endX - piece->getX();
-			diffY = endY - piece->getY();
 
 			cout << "DiffX: " << diffX << "DiffY: " << diffY << endl;
 
@@ -261,11 +252,6 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 		break;
 	case 'q' :
 		if (abs(endY - piece->getY()) == abs(endX - piece->getX()) || (endX == piece->getX() || endY == piece->getY())) {
-
-			tempX = piece->getX();
-			tempY = piece->getY();
-			diffX = endX - piece->getX();
-			diffY = endY - piece->getY();
 
 			if (diffX > 0 && diffY < 0) { //up right
 				tempX++;
@@ -362,6 +348,43 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 
 		}
 		break;
+	case 'k':
+		if (getBoardPtr(endX, endY) == nullptr || getBoardPtr(startX, startY)->getPlayer() != getBoardPtr(endX, endY)->getPlayer()) {
+			if (endX == piece->getX() + 1) {
+				if (endY == piece->getY() + 1) {
+					isValid = true;
+				}
+				else if (endY == piece->getY() - 1) {
+					isValid = true;
+				}
+				else if (endY == piece->getY()) {
+					isValid = true;
+				}
+			}
+			else if (endX == piece->getX() - 1) {
+				if (endY == piece->getY() + 1) {
+					isValid = true;
+				}
+				else if (endY == piece->getY() - 1) {
+					isValid = true;
+				}
+				else if (endY == piece->getY()) {
+					isValid = true;
+				}
+			}
+			else {
+				if (endY == piece->getY() + 1) {
+					isValid = true;
+				}
+				else if (endY == piece->getY() - 1) {
+					isValid = true;
+				}
+			}
+		}
+		
+		
+		break;
+
 	}
 	
 	if (flag == true) {
