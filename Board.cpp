@@ -153,7 +153,6 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 					while (tempX != endX && tempY != endY) {
 						if (getBoardPtr(tempX, tempY) != nullptr) {
 							flag = true;
-							cout << "Piece collision detected" << endl;
 						}
 						tempX++;
 						tempY--;
@@ -165,7 +164,6 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 					while (tempX != endX && tempY != endY) {
 						if (getBoardPtr(tempX, tempY) != nullptr) {
 							flag = true;
-							cout << "Piece collision detected" << endl;
 						}
 						tempX++;
 						tempY++;
@@ -177,7 +175,6 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 					while (tempX != endX && tempY != endY) {
 						if (getBoardPtr(tempX, tempY) != nullptr) {
 							flag = true;
-							cout << "Piece collision detected" << endl;
 						}
 						tempX--;
 						tempY--;
@@ -189,7 +186,6 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 					while (tempX != endX && tempY != endY) {
 						if (getBoardPtr(tempX, tempY) != nullptr) {
 							flag = true;
-							cout << "Piece collision detected" << endl;
 						}
 						tempX--;
 						tempY++;
@@ -199,14 +195,65 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 				if (getBoardPtr(endX, endY) == nullptr) {
 					isValid = true;
 				} else if (getBoardPtr(endX, endY)->getPlayer() != getBoardPtr(startX, startY)->getPlayer()) {
-						isValid = true;
-					}
+					isValid = true;
+				}
 				
 		}
 		break;
 	case 'r':
 		if (endX == piece->getX() || endY == piece->getY()) {
+			tempX = piece->getX();
+			tempY = piece->getY();
+			diffX = endX - piece->getX();
+			diffY = endY - piece->getY();
+
+			cout << "DiffX: " << diffX << "DiffY: " << diffY << endl;
+
+			if (diffX == 0 && diffY < 0) { //up
+				cout << "Rook moving up" << endl;
+				tempY--;
+				while (tempY != endY) {
+					if (getBoardPtr(tempX, tempY) != nullptr) {
+						flag = true;
+					}
+					tempY--;
+				}
+			}
+			if (diffX == 0 && diffY > 0) { //down
+				cout << "Rook moving down" << endl;
+				tempY++;
+				while (tempY != endY) {
+					if (getBoardPtr(tempX, tempY) != nullptr) {
+						flag = true;
+					}
+					tempY++;
+				}
+			}
+			if (diffX < 0 && diffY == 0) { //left
+				cout << "Rook moving left" << endl;
+				tempX--;
+				while (tempX != endX) {
+					if (getBoardPtr(tempX, tempY) != nullptr) {
+						flag = true;
+					}
+					tempX--;
+				}
+			}
+			if (diffX > 0 && diffY == 0) { //right
+				cout << "Rook moving right" << endl;
+				tempX++;
+				while (tempX != endX) {
+					if (getBoardPtr(tempX, tempY) != nullptr) {
+						flag = true;
+					}
+					tempX++;
+				}
+			}
+
 			if (getBoardPtr(endX, endY) == nullptr) {
+				isValid = true;
+			}
+			else if (getBoardPtr(endX, endY)->getPlayer() != getBoardPtr(startX, startY)->getPlayer()) {
 				isValid = true;
 			}
 			
@@ -215,6 +262,7 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 	
 	if (flag == true) {
 		isValid = false;
+		cout << "Piece collision detected" << endl;
 	}
 	return isValid;
 }
