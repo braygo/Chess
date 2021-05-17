@@ -43,9 +43,11 @@ void ChessGame::runGame(void) {
 						Piece* selectedPiece = getPieceSelected();
 						if (gameboard.checkMove(selectedPiece->getX(), selectedPiece->getY(), currentXCoord, currentYCoord)) {
 							gameboard.movePiece(selectedPiece->getX(), selectedPiece->getY(), currentXCoord, currentYCoord);
-							setPieceSelected(nullptr);
 						}
-						
+						else {
+							cout << "Invalid Move" << endl;
+						}
+						setPieceSelected(nullptr);
 					}
 					
 				}

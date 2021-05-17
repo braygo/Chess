@@ -99,7 +99,6 @@ bool Board::checkMove(int startX, int startY, int endX, int endY) {
 					isValid = true;
 				}
 			} 
-			
 			//attacking
 			else if ((endY + 1 == piece->getY() && abs(endX - piece->getX()) == 1) && (getBoardPtr(endX, endY) != nullptr && getBoardPtr(endX,endY)->getPlayer() != getBoardPtr(startX, startY)->getPlayer())) {
 				isValid = true;
