@@ -38,12 +38,18 @@ void ChessGame::runGame(void) {
 					Piece* currentPiece = gameboard.getBoardPtr(currentXCoord, currentYCoord);
 
 					//Selecting phase
-					if ((getPieceSelected() == nullptr && currentPiece != nullptr) && currentPiece->getPlayer() == getTurn()) {
-						setPieceSelected(currentPiece);
-						std::cout << "Piece Selected" << std::endl;
+					if ((getPieceSelected() == nullptr && currentPiece != nullptr)) {
+						if (currentPiece->getPlayer() == getTurn()) {
+							setPieceSelected(currentPiece);
+							std::cout << "Piece Selected" << std::endl;
+						}
+						else {
+							cout << "Wrong Turn!" << endl;
+						}
+
 					}
 					//Movement phase
-					else if(getPieceSelected() != nullptr){ 
+					else if (getPieceSelected() != nullptr) {
 						Piece* selectedPiece = getPieceSelected();
 						if (gameboard.checkMove(selectedPiece->getX(), selectedPiece->getY(), currentXCoord, currentYCoord)) {
 							gameboard.movePiece(selectedPiece->getX(), selectedPiece->getY(), currentXCoord, currentYCoord);
@@ -52,6 +58,9 @@ void ChessGame::runGame(void) {
 						else {
 							cout << "Invalid Move" << endl;
 						}
+						setPieceSelected(nullptr);
+					}
+					else if (getPieceSelected() == currentPiece) {
 						setPieceSelected(nullptr);
 					}
 					
