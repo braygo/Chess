@@ -1,5 +1,10 @@
 #include "ChessGame.h"
 
+ChessGame::ChessGame() {
+	setTurn(true);
+	setWinner(0);
+}
+
 void ChessGame::runGame(void) {
 	RenderWindow window(VideoMode(1024, 1024), "C++ Chess", Style::Close | Style::Titlebar);
 
@@ -54,6 +59,24 @@ void ChessGame::runGame(void) {
 						if (gameboard.checkMove(selectedPiece->getX(), selectedPiece->getY(), currentXCoord, currentYCoord)) {
 							gameboard.movePiece(selectedPiece->getX(), selectedPiece->getY(), currentXCoord, currentYCoord);
 							setTurn(!getTurn()); //alternating turn
+							if (currentPiece != nullptr) {
+								if (currentPiece->getType() == 'k') {
+									//game won
+									if (selectedPiece->getPlayer()) { //white wins
+										setWinner(1);
+										cout << "White Wins" << endl;
+										//window.close();
+										return;
+									}
+									else { //black wins
+										setWinner(2);
+										cout << "Black Wins" << endl;
+										//window.close();
+										return;
+									}
+								}
+							}
+							
 						}
 						else {
 							cout << "Invalid Move" << endl;
@@ -75,14 +98,23 @@ void ChessGame::setPieceSelected(Piece* newPiece) {
 	pieceSelected = newPiece;
 }
 
+void ChessGame::setTurn(bool tf) {
+	turn = tf;
+}
+
+void ChessGame::setWinner(int val) {
+	winner = val;
+}
+
 Piece* ChessGame::getPieceSelected() {
 	return pieceSelected;
 }
 
-void ChessGame::setTurn(bool tf) {
-	turn = tf;
-}
-bool ChessGame::getTurn(void) {
+bool ChessGame::getTurn() {
 	return turn;
+}
+
+int ChessGame::getWinner() {
+	return winner;
 }
 

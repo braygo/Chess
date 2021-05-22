@@ -2,17 +2,21 @@
 
 class ChessGame {
 public:
-//	ChessGame();
+	ChessGame();
 
 	void runGame();
 
 	void setPieceSelected(Piece* newPiece);
-	Piece* getPieceSelected();
-
 	void setTurn(bool tf);
-	bool getTurn(void);
+	void setWinner(int val);
+	
+	Piece* getPieceSelected();
+	bool getTurn();
+	int getWinner();
+
 private:
 	Board gameboard;
 	Piece* pieceSelected;
 	bool turn; //true == white, false == black
+	int winner; //0 == null, 1 == white, 2 == black
 };
