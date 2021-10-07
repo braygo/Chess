@@ -7,7 +7,3 @@ from scratch with the aim of improving code quality and adding functionalities.
 
 ![](ChessDemo.gif)
 
-To Do:
-- Add Winning
-- Add Castling
-- Add En Passant
